@@ -1,0 +1,28 @@
+Análise sobre gráfico novo do Pillon para filas > 10 e > 50:
+
+------ SOBRE IMPLEMENTAÇÃO ------:
+	Obs: usou as entradas antigas, sem os fictícios (não sei se era a intenção)
+	Houve um erro na implementação, não considerou os valores 25, 50 e 75 como possíveis scores, pois usou > e < e não >= e um dos thresholds. É plenamente possivel ser aqueles valores.
+	Esses testes foram para o score10800, supostamente o mais "forte" ou que mais afeta.
+	
+-------- SOBRE AS SAÍDAS --------:
+ 
+	VARIÁVEL RAZÃO: Ao que parece, os valores da razão são dados pelo tamanho da fila dividido pela posição de entrada (interpretação diferente, mas acredito que válida). Conforme se aproxima de 1 pior (minimo), quanto maior seu valor melhor, ou seja, mais posições ganhas.
+		Particularmente acho que porcentagem ou algo do gênero seria melhor para expressar, pois esse gráfico visualmente não ajuda, pois o limite de valores é quase 30 no filas > 10, quando obter uma razão 2 na prática já é cortar metade da fila, um grande ganho, mas visualmente não fica tão explícito isso.
+
+	QUANTO A CONCLUSÃO DAS SAÍDAS:
+	Visivel que tarefas com score baixo (0 a 25) tem uma grande tendencia a não ganharem posições (razao 1), independente do tamanho da fila.
+		Os pontos que fogem das curvas no 0-25, na fila > 10, imagino que sejam de tarefas com score mais proximos do 25 (que são bastante) que ganha posições osbre as com score 0 ou proximo (maioria), dado que as de menor score não estejam também a tanto tempo na fila esperando.
+	Em filas > 50 isso é menos provável de ocorrer, como mostra o gráfico. Possivelmente causado porque se a fila está grande assim, está há um bom tempo, logo o score não irá influenciar tanto, dado que o tempo de espera das tarefas a frente é mto alto, então mesmo com tarefas de score alto, ficam ainda atrás dessas com grande espera. Vale para qualquer faixa de score, no caso.
+	OBS: O que me surpreendeu muito, foi uma tendencia até bem baixa de tarefas com score alto (50-75) na situação fila > 10 terem uma razão alta. Esperava um valor maior. Pode e deve ser por conta da influencia do tempo de espera para a fila chegar a tal tamanho, como citado anterioremente, porém é um comportamento mais esperado para filas > 50 ou algo assim.
+		Muito provavelmenteas tarefas estão ganhando mais posições em filas menores, porém nas maiores filas, até por conta então desse tmepo de espera das que já estão, possuem uma tendencia a não ultrapassa-las tão facilmente
+	No caso 50-75 e 25-50 com filas > 10, vemos um ganho razoavel. A mediana aparenta estar em algo como 1,3 a 1,5 na razão, isso indica um ganho de 25% a 33%, o que é algo bem razoável. Porém há alguns casos em que o ganho é basicamente ir pra ponta da filas, no caso de razões maiores que 5 e afim (numa fila de tam 50, iria para posição 10 numa razão 5).
+	Também estranhei o fato da mediana 25-50 ser maior que a 50-75 no caso fila > 10, não encontrei motivo se não coincidencia quanto ao score das tarefas concorrentes no momento e que porque provavelmente as de score 25-50 só existiram em filas menores (tanto que nenhuma está em > 50), o que pode ter dado uma mediana da razão maior.
+	O fato de filas de certa faixa não estarem com filas >10 ou >50, acredito que seja pura coincidencia do momento de suas execuções mesmo.
+	OBS: APESAR DE SER FILAS > 10, NÃO NECESSARIAMENTE ESTÁ PROXIMO DESSE VALOR, PODEM SER FILAS DE TAMANHO 30, 40, ETC, ENTÃO PRECISAMOS AMPLIAR ESSA VISÃO DE INTERPRETAÇÃO.
+
+------ CONCLUSÕES MAIS GERAIS ------:
+
+	O algoritmo permite ganhos de filas, no sentido da razão, porém isso deve ocorrer muito mais comumente em filas pequenas (<30 sla). Quando em filas grandes (>50), pelo tempo de espera de outras tarefas e mesmo o tamanho da fila em si, o ganho acaba não sendo tão grande.
+	Ainda sim, apesar do gráfico visualmente não ajudar tanto, para caso filas > 10 os ganhos médios são interessantes.
+----------------------------------
